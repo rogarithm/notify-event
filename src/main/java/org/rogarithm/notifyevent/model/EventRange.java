@@ -1,16 +1,23 @@
 package org.rogarithm.notifyevent.model;
 
+import jakarta.persistence.Embeddable;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@Embeddable
 public class EventRange {
-    private final LocalDateTime startDateTime;
-    private final LocalDateTime endDateTime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
 
     public EventRange(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+    }
+
+    public EventRange() {
+
     }
 
     public static EventRange of1Day(LocalDate date) {
