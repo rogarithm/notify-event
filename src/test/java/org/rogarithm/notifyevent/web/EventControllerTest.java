@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.rogarithm.notifyevent.service.EventService;
 import org.rogarithm.notifyevent.web.dto.EventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
 
