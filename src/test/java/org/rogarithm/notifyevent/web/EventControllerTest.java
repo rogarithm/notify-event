@@ -1,5 +1,6 @@
 package org.rogarithm.notifyevent.web;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,10 +31,6 @@ class EventControllerTest {
 
         eventController.add(request);
 
-        Mockito.verify(eventService, Mockito.times(1)).add(EventAddDto.of2(
-                request.getStartDate(),
-                request.getEndDate(),
-                request.getDescription()
-        ));
+        Mockito.verify(eventService, Mockito.times(1)).add(EventAddDto.from(request));
     }
 }

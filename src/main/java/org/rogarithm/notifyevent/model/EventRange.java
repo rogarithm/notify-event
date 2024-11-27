@@ -21,7 +21,7 @@ public class EventRange {
     }
 
     public static EventRange of1Day(LocalDate date) {
-        return new EventRange(LocalDateTime.of(date, LocalTime.MIN), LocalDateTime.of(date, LocalTime.MAX));
+        return new EventRange(LocalDateTime.of(date, LocalTime.of(0,0,0)), LocalDateTime.of(date, LocalTime.of(23,59,59)));
     }
 
     public LocalDateTime getStartDateTime() {

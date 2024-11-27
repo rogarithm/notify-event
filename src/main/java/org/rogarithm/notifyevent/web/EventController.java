@@ -21,7 +21,7 @@ public class EventController {
     public void add(@RequestBody EventAddRequest request) {
         switch (request.getEventType()) {
             case HAS_NO_TIME:
-                EventAddDto dto = EventAddDto.of2(request.getStartDate(), request.getEndDate(), request.getDescription());
+                EventAddDto dto = EventAddDto.from(request);
                 eventService.add(dto);
                 return;
             case HAS_TIME:

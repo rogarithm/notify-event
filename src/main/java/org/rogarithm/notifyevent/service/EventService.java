@@ -17,8 +17,7 @@ public class EventService {
 
     @Transactional
     public void add(EventAddDto dto) {
-        Event event = Event.of1Day(dto.getStartDateTime().toLocalDate(), dto.getDescription());
+        Event event = new Event(dto.getStartDateTime(), dto.getEndDateTime(), dto.getDescription());
         eventRepository.save(event);
-        System.out.println("HERE: " + event.getId());
     }
 }
