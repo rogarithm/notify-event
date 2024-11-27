@@ -1,4 +1,4 @@
-package org.rogarithm.notifyevent.web.dto;
+package org.rogarithm.notifyevent.service.dto;
 
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
 

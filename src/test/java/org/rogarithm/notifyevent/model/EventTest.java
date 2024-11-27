@@ -2,9 +2,6 @@ package org.rogarithm.notifyevent.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.rogarithm.notifyevent.web.dto.EventAddDto;
-import org.rogarithm.notifyevent.web.request.EventAddRequest;
-import org.rogarithm.notifyevent.web.request.EventType;
 
 import java.time.LocalDate;
 

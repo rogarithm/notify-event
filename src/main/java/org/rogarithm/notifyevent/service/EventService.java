@@ -2,7 +2,7 @@ package org.rogarithm.notifyevent.service;
 
 import org.rogarithm.notifyevent.model.Event;
 import org.rogarithm.notifyevent.repository.EventRepository;
-import org.rogarithm.notifyevent.web.dto.EventAddDto;
+import org.rogarithm.notifyevent.service.dto.EventAddDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
