@@ -7,10 +7,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.rogarithm.notifyevent.service.EventService;
-import org.rogarithm.notifyevent.web.dto.EventAddDto;
+import org.rogarithm.notifyevent.service.dto.EventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
+import org.rogarithm.notifyevent.web.request.EventType;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @ExtendWith(MockitoExtension.class)
 class EventControllerTest {
@@ -23,15 +24,16 @@ class EventControllerTest {
 
     @Test
     public void test_add_event() {
-        LocalDateTime aDay = LocalDateTime.of(2024, 11, 25, 0, 0, 0);
-        EventAddRequest request = new EventAddRequest(aDay, aDay, "1 day event");
+        LocalDate aDay = LocalDate.of(2024, 11, 25);
+        EventAddRequest request = new EventAddRequest(
+                EventType.HAS_NO_TIME,
+                aDay, aDay,
+                null, null,
+                "1 day event"
+        );
 
         eventController.add(request);
 
-        Mockito.verify(eventService, Mockito.times(1)).add(EventAddDto.of(
-                request.getStartDateTime(),
-                request.getEndDateTime(),
-                request.getDescription()
-        ));
+        Mockito.verify(eventService, Mockito.times(1)).add(EventAddDto.from(request));
     }
 }

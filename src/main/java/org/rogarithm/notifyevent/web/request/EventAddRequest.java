@@ -1,27 +1,56 @@
 package org.rogarithm.notifyevent.web.request;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class EventAddRequest {
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private EventType eventType;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    private LocalTime startTime;
+    private LocalTime endTime;
+
     private String description;
 
-    public EventAddRequest(LocalDateTime startDateTime, LocalDateTime endDateTime, String description) {
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
+    public EventAddRequest(
+            EventType eventType,
+            LocalDate startDate,
+            LocalDate endDate,
+            LocalTime startTime,
+            LocalTime endTime,
+            String description
+    ) {
+        this.eventType = eventType;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.description = description;
     }
 
     public EventAddRequest() {
     }
 
-    public LocalDateTime getStartDateTime() {
-        return startDateTime;
+    public EventType getEventType() {
+        return eventType;
     }
 
-    public LocalDateTime getEndDateTime() {
-        return endDateTime;
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
     public String getDescription() {
