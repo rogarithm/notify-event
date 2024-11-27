@@ -1,12 +1,21 @@
 package org.rogarithm.notifyevent.web.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class EventAddDto {
+    private LocalDate startDate;
+    private LocalDate endDate;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private String description;
+
+    public EventAddDto(LocalDate startDate, LocalDate endDate, String description) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+    }
 
     public EventAddDto(LocalDateTime startDateTime, LocalDateTime endDateTime, String description) {
         this.startDateTime = startDateTime;
@@ -24,6 +33,10 @@ public class EventAddDto {
 
     public String getDescription() {
         return description;
+    }
+
+    public static EventAddDto of2(LocalDate startDate, LocalDate endDate, String description) {
+        return new EventAddDto(startDate, endDate, description);
     }
 
     public static EventAddDto of(LocalDateTime startDateTime, LocalDateTime endDateTime, String description) {

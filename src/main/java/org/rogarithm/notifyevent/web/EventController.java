@@ -19,7 +19,13 @@ public class EventController {
 
     @RequestMapping(method=POST, path="/event")
     public void add(@RequestBody EventAddRequest request) {
-        EventAddDto dto = EventAddDto.of(request.getStartDateTime(), request.getEndDateTime(), request.getDescription());
-        eventService.add(dto);
+        switch (request.getEventType()) {
+            case HAS_NO_TIME:
+                EventAddDto dto = EventAddDto.of2(request.getStartDate(), request.getEndDate(), request.getDescription());
+                eventService.add(dto);
+                return;
+            case HAS_TIME:
+            default:
+        }
     }
 }
