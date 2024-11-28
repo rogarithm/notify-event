@@ -17,7 +17,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @RequestMapping(method=POST, path="/event")
+    @RequestMapping(method=POST, path="/events")
     public void add(@RequestBody EventAddRequest request) {
         switch (request.getEventType()) {
             case HAS_NO_TIME:
