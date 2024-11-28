@@ -1,5 +1,6 @@
 package org.rogarithm.notifyevent.web;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,13 +9,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.rogarithm.notifyevent.model.Event;
 import org.rogarithm.notifyevent.service.EventService;
 import org.rogarithm.notifyevent.service.dto.EventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
 import org.rogarithm.notifyevent.web.request.EventType;
+import org.rogarithm.notifyevent.web.response.EventGetResponse;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class EventControllerTest {
@@ -102,5 +109,31 @@ class EventControllerTest {
     @Nested
     @DisplayName("리소스 읽어오기 핸들러")
     class HandleGet {
+        @DisplayName("특정 일자의 이벤트 목록을 가져올 수 있다")
+        @Test
+        public void test_get_events_by_date() {
+            LocalDate aDay = LocalDate.of(2024, 11, 25);
+            Mockito.when(eventService.find(aDay)).thenReturn(List.of(
+                    EventGetResponse.from(new Event(
+                            LocalDateTime.of(aDay, LocalTime.of(9,0)),
+                            LocalDateTime.of(aDay, LocalTime.of(10,0)),
+                            "check1")
+                    ),
+                    EventGetResponse.from(new Event(
+                            LocalDateTime.of(aDay, LocalTime.of(12,0)),
+                            LocalDateTime.of(aDay, LocalTime.of(14,0)),
+                            "check2")
+                    )
+            ));
+
+            List<EventGetResponse> matchingEvents = eventController.find(aDay);
+
+            Mockito.verify(eventService, Mockito.times(1)).find(aDay);
+            assertThat(
+                    matchingEvents.stream().map(res -> res.getStartDateTime().toLocalDate())
+            ).isEqualTo(
+                    List.of(aDay, aDay)
+            );
+        }
     }
 }

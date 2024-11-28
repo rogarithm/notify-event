@@ -35,4 +35,16 @@ public class EventRange {
     public String toString() {
         return this.startDateTime.toString() + " - " + this.endDateTime.toString();
     }
+
+    public boolean includes(LocalDate date) {
+        EventRange rangeToCompare = EventRange.of1Day(date);
+
+        if (this.startDateTime.isAfter(rangeToCompare.getEndDateTime())) {
+            return false;
+        }
+        if (this.endDateTime.isBefore(rangeToCompare.getStartDateTime())) {
+            return false;
+        }
+        return true;
+    }
 }
