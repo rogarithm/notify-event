@@ -5,6 +5,7 @@ import org.rogarithm.notifyevent.service.dto.EventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
 import org.rogarithm.notifyevent.web.response.EventGetResponse;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,7 @@ public class EventController {
                 eventService.add(EventAddDto.from(request));
                 return;
             default:
+                throw new HttpMessageNotReadableException(request.getEventType().toString());
         }
     }
 
