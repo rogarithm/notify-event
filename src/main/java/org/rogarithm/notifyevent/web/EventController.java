@@ -1,6 +1,5 @@
 package org.rogarithm.notifyevent.web;
 
-import org.rogarithm.notifyevent.model.Event;
 import org.rogarithm.notifyevent.service.EventService;
 import org.rogarithm.notifyevent.service.dto.EventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
