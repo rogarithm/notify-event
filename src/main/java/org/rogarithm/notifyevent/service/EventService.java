@@ -1,5 +1,7 @@
 package org.rogarithm.notifyevent.service;
 
+import org.rogarithm.notifyevent.common.exception.ErrorCode;
+import org.rogarithm.notifyevent.exception.EventException;
 import org.rogarithm.notifyevent.model.Event;
 import org.rogarithm.notifyevent.repository.EventRepository;
 import org.rogarithm.notifyevent.service.dto.EventAddDto;
@@ -10,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class EventService {
@@ -27,12 +28,17 @@ public class EventService {
         eventRepository.save(event);
     }
 
-    @Transactional
     public List<EventGetResponse> find(LocalDate aDay) {
-        return eventRepository.findAll()
+        List<EventGetResponse> matchingEvents = eventRepository.findAll()
                 .stream()
                 .filter(evt1 -> evt1.getEventRange().includes(aDay))
                 .map(evt -> EventGetResponse.from(evt))
                 .collect(Collectors.toList());
+
+        if (matchingEvents.isEmpty()) {
+            throw new EventException(ErrorCode.NOT_EXISTS);
+        }
+
+        return matchingEvents;
     }
 }
