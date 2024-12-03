@@ -28,13 +28,27 @@ public class EventService {
         eventRepository.save(event);
     }
 
-    public List<EventGetResponse> find(LocalDate aDay) {
+    public List<EventGetResponse> findByDate(LocalDate aDay) {
         List<EventGetResponse> matchingEvents = eventRepository.findAll()
                 .stream()
                 .filter(evt1 -> evt1.getEventRange().includes(aDay))
                 .map(evt -> EventGetResponse.from(evt))
                 .collect(Collectors.toList());
 
+        if (matchingEvents.isEmpty()) {
+            throw new EventException(ErrorCode.NOT_EXISTS);
+        }
+
+        return matchingEvents;
+    }
+
+    public List<EventGetResponse> findByDescription(String description) {
+        List<EventGetResponse> matchingEvents = eventRepository.findAll()
+                .stream()
+                .filter(evt -> evt.getDescription().matches("^.*" + description + ".*$"))
+                .map(evt -> EventGetResponse.from(evt))
+                .collect(Collectors.toList());
+        System.out.println(matchingEvents);
         if (matchingEvents.isEmpty()) {
             throw new EventException(ErrorCode.NOT_EXISTS);
         }

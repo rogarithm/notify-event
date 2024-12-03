@@ -48,4 +48,15 @@ class EventServiceTest {
                 .collect(Collectors.toList());
         System.out.println(ks);
     }
+
+    @DisplayName("한글 필터링에 문제가 없는지 확인한다")
+    @Test
+    public void test_filter_korean_result() {
+        K k = new K("k");
+        List<X> ks = List.of(new X("5일 이벤트"), new X("1일 이벤트"), new X("그냥 이벤트"))
+                .stream()
+                .filter(xish -> xish.x.matches("^.*일.*$"))
+                .collect(Collectors.toList());
+        System.out.println(ks);
+    }
 }

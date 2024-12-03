@@ -40,7 +40,16 @@ public class EventController {
     }
 
     @RequestMapping(method=GET, path="/events")
-    public List<EventGetResponse> find(@RequestParam(name="date") @DateTimeFormat LocalDate date) {
-        return eventService.find(date);
+    public List<EventGetResponse> find(
+            @RequestParam(name="date", required = false) @DateTimeFormat LocalDate date,
+            @RequestParam(name="description", required = false) String description
+    ) {
+        if (date != null) {
+            return eventService.findByDate(date);
+        }
+        if (description != null) {
+            return eventService.findByDescription(description);
+        }
+        throw new HttpMessageNotReadableException("date and description are required");
     }
 }
