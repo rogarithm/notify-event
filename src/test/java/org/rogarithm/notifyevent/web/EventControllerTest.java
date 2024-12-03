@@ -1,6 +1,5 @@
 package org.rogarithm.notifyevent.web;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -113,7 +112,7 @@ class EventControllerTest {
         @Test
         public void test_get_events_by_date() {
             LocalDate aDay = LocalDate.of(2024, 11, 25);
-            Mockito.when(eventService.find(aDay)).thenReturn(List.of(
+            Mockito.when(eventService.findByDate(aDay)).thenReturn(List.of(
                     EventGetResponse.from(new Event(
                             LocalDateTime.of(aDay, LocalTime.of(9,0)),
                             LocalDateTime.of(aDay, LocalTime.of(10,0)),
@@ -126,13 +125,41 @@ class EventControllerTest {
                     )
             ));
 
-            List<EventGetResponse> matchingEvents = eventController.find(aDay);
+            List<EventGetResponse> matchingEvents = eventController.find(aDay, null);
 
-            Mockito.verify(eventService, Mockito.times(1)).find(aDay);
+            Mockito.verify(eventService, Mockito.times(1)).findByDate(aDay);
             assertThat(
                     matchingEvents.stream().map(res -> res.getStartDateTime().toLocalDate())
             ).isEqualTo(
                     List.of(aDay, aDay)
+            );
+        }
+
+        @DisplayName("주어진 이벤트 상세 정보를 갖는 이벤트 목록을 가져올 수 있다")
+        @Test
+        public void test_get_events_by_description() {
+            LocalDate aDay = LocalDate.of(2024, 11, 25);
+            String description = "check";
+            Mockito.when(eventService.findByDescription(description)).thenReturn(List.of(
+                    EventGetResponse.from(new Event(
+                            LocalDateTime.of(aDay, LocalTime.of(9,0)),
+                            LocalDateTime.of(aDay, LocalTime.of(10,0)),
+                            "check1")
+                    ),
+                    EventGetResponse.from(new Event(
+                            LocalDateTime.of(aDay, LocalTime.of(12,0)),
+                            LocalDateTime.of(aDay, LocalTime.of(14,0)),
+                            "check2")
+                    )
+            ));
+
+            List<EventGetResponse> matchingEvents = eventController.find(null, description);
+
+            Mockito.verify(eventService, Mockito.times(1)).findByDescription(description);
+            assertThat(
+                    matchingEvents.stream().map(res -> res.getDescription())
+            ).isEqualTo(
+                    List.of("check1", "check2")
             );
         }
     }
