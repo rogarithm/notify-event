@@ -13,6 +13,8 @@ import org.rogarithm.notifyevent.service.EventService;
 import org.rogarithm.notifyevent.service.dto.EventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
 import org.rogarithm.notifyevent.web.request.EventType;
+import org.rogarithm.notifyevent.web.request.RecurEventAddRequest;
+import org.rogarithm.notifyevent.web.request.RecurParams;
 import org.rogarithm.notifyevent.web.response.EventGetResponse;
 
 import java.time.LocalDate;
@@ -102,6 +104,17 @@ class EventControllerTest {
             eventController.add(request);
 
             Mockito.verify(eventService, Mockito.times(1)).add(EventAddDto.from(request));
+        }
+
+        @DisplayName("반복되는 이벤트 등록 요청을 만들 수 있다")
+        @Test
+        public void test_add_recur_event() {
+            RecurEventAddRequest request = new RecurEventAddRequest(
+                    "golf games", "DayInMonth",
+                    new RecurParams("1", "1")
+            );
+
+            eventController.addRecur(request);
         }
     }
 

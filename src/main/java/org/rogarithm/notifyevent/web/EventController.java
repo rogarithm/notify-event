@@ -3,6 +3,7 @@ package org.rogarithm.notifyevent.web;
 import org.rogarithm.notifyevent.service.EventService;
 import org.rogarithm.notifyevent.service.dto.EventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
+import org.rogarithm.notifyevent.web.request.RecurEventAddRequest;
 import org.rogarithm.notifyevent.web.response.EventGetResponse;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -51,5 +52,10 @@ public class EventController {
             return eventService.findByDescription(description);
         }
         throw new HttpMessageNotReadableException("date and description are required");
+    }
+
+    @RequestMapping(method=POST, path="/events/recur")
+    public void addRecur(@RequestBody RecurEventAddRequest request) {
+        System.out.println(request);
     }
 }
