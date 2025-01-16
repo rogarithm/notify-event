@@ -11,10 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.rogarithm.notifyevent.model.Event;
 import org.rogarithm.notifyevent.service.EventService;
 import org.rogarithm.notifyevent.service.dto.EventAddDto;
-import org.rogarithm.notifyevent.web.request.EventAddRequest;
-import org.rogarithm.notifyevent.web.request.EventType;
-import org.rogarithm.notifyevent.web.request.RecurEventAddRequest;
-import org.rogarithm.notifyevent.web.request.RecurParams;
+import org.rogarithm.notifyevent.web.request.*;
 import org.rogarithm.notifyevent.web.response.EventGetResponse;
 
 import java.time.LocalDate;
@@ -110,7 +107,7 @@ class EventControllerTest {
         @Test
         public void test_add_recur_event() {
             RecurEventAddRequest request = new RecurEventAddRequest(
-                    "golf games", "DayInMonth",
+                    "golf games", RecurType.DAY_IN_MONTH,
                     new RecurParams("1", "1")
             );
 
