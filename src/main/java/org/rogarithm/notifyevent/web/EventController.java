@@ -1,9 +1,14 @@
 package org.rogarithm.notifyevent.web;
 
 import org.rogarithm.notifyevent.service.EventService;
+import org.rogarithm.notifyevent.service.RecurEventService;
 import org.rogarithm.notifyevent.service.dto.EventAddDto;
+import org.rogarithm.notifyevent.service.dto.RecurEventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
+import org.rogarithm.notifyevent.web.request.RecurEventAddRequest;
 import org.rogarithm.notifyevent.web.response.EventGetResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +24,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class EventController {
-    private final EventService eventService;
+    private static final Logger log = LoggerFactory.getLogger(EventController.class);
 
-    public EventController(EventService eventService) {
+    private final EventService eventService;
+    private final RecurEventService recurEventService;
+
+    public EventController(EventService eventService, RecurEventService recurEventService) {
         this.eventService = eventService;
+        this.recurEventService = recurEventService;
     }
 
     @RequestMapping(method=POST, path="/events")
@@ -51,5 +60,10 @@ public class EventController {
             return eventService.findByDescription(description);
         }
         throw new HttpMessageNotReadableException("date and description are required");
+    }
+
+    @RequestMapping(method=POST, path="/events/recur")
+    public void addRecur(@RequestBody RecurEventAddRequest request) {
+        recurEventService.add(RecurEventAddDto.from(request));
     }
 }

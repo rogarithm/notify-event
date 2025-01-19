@@ -1,8 +1,7 @@
-package org.rogarithm.notifyevent.web.dto;
+package org.rogarithm.notifyevent.service.dto;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.rogarithm.notifyevent.service.dto.EventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
 import org.rogarithm.notifyevent.web.request.EventType;
 

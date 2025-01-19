@@ -1,5 +1,6 @@
 package org.rogarithm.notifyevent.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.rogarithm.notifyevent.model.Event;
 import org.rogarithm.notifyevent.service.EventService;
+import org.rogarithm.notifyevent.service.RecurEventService;
 import org.rogarithm.notifyevent.service.dto.EventAddDto;
-import org.rogarithm.notifyevent.web.request.EventAddRequest;
-import org.rogarithm.notifyevent.web.request.EventType;
+import org.rogarithm.notifyevent.web.request.*;
 import org.rogarithm.notifyevent.web.response.EventGetResponse;
 
 import java.time.LocalDate;
@@ -30,6 +31,8 @@ class EventControllerTest {
 
     @Mock
     EventService eventService;
+    @Mock
+    RecurEventService recurEventService;
 
     @Nested
     @DisplayName("리소스 추가 핸들러")
@@ -102,6 +105,17 @@ class EventControllerTest {
             eventController.add(request);
 
             Mockito.verify(eventService, Mockito.times(1)).add(EventAddDto.from(request));
+        }
+
+        @DisplayName("반복되는 이벤트 등록 요청을 만들 수 있다")
+        @Test
+        public void test_add_recur_event() throws JsonProcessingException {
+            RecurEventAddRequest request = new RecurEventAddRequest(
+                    "golf games", RecurType.DAY_IN_MONTH,
+                    new RecurParams("1", "1")
+            );
+
+            eventController.addRecur(request);
         }
     }
 
