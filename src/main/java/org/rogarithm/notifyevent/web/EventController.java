@@ -7,6 +7,7 @@ import org.rogarithm.notifyevent.service.dto.RecurEventAddDto;
 import org.rogarithm.notifyevent.web.request.EventAddRequest;
 import org.rogarithm.notifyevent.web.request.RecurEventAddRequest;
 import org.rogarithm.notifyevent.web.response.EventGetResponse;
+import org.rogarithm.notifyevent.web.response.RecurEventAddResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -63,7 +64,7 @@ public class EventController {
     }
 
     @RequestMapping(method=POST, path="/events/recur")
-    public void addRecur(@RequestBody RecurEventAddRequest request) {
-        recurEventService.add(RecurEventAddDto.from(request));
+    public RecurEventAddResponse addRecur(@RequestBody RecurEventAddRequest request) {
+        return recurEventService.add(RecurEventAddDto.from(request));
     }
 }
